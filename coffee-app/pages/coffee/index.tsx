@@ -1,6 +1,8 @@
 import Card from "@/components/Card";
 import styles from "@/styles/card.module.css";
-import coffeeStores from "@/data/coffee.json";
+import { useRouter } from "next/router";
+import coffeeData from "@/data/coffee.json";
+import { GetStaticProps } from "next";
 
 interface CoffeeItem {
   id: number;
@@ -8,16 +10,21 @@ interface CoffeeItem {
   imgUrl: string;
 }
 
-interface HomeProps {
-  data: CoffeeItem[];
+interface CoffeePageProps {
+  items: CoffeeItem[];
+  error: boolean;
 }
 
-const Home: React.FC<HomeProps> = ({ data }) => {
-  const coffeeItems: JSX.Element[] = data.map(
+const CoffeePage: React.FC<CoffeePageProps> = ({ items, error }) => {
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading..</div>;
+  }
+  const coffeeItems: JSX.Element[] = items.map(
     (item: CoffeeItem, index: number) => {
       return (
         <Card
-          key={index}
+          key={item.id}
           href={`/coffee/${item.id}`}
           name={item.name}
           imgUrl={item.imgUrl}
@@ -45,16 +52,17 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   );
 };
 
-// static server side rendering
-// export async function getStaticProps() {
-//   const data = coffeeStores;
+// SSG
+// export const getStaticProps: GetStaticProps<CoffeePageProps> = async () => {
 //   return {
 //     props: {
-//       data,
+//       items: coffeeData,
+//       error: false,
 //     },
 //   };
-// }
+// };
 
+// SSR
 export async function getServerSideProps() {
   const apiUrl = "https://coffeerota.free.beeceptor.com/coffee";
   try {
@@ -65,18 +73,20 @@ export async function getServerSideProps() {
     const data: CoffeeItem[] = await response.json();
     return {
       props: {
-        data,
+        items: data,
+        error: false,
       },
     };
   } catch (error) {
     console.error("Error fetching data:", error);
     return {
       props: {
-        data: [],
+        items: [],
+        error: true,
       },
     };
   }
 }
 
-export default Home;
-// http://localhost:3000/home
+export default CoffeePage;
+// http://localhost:3000/coffee

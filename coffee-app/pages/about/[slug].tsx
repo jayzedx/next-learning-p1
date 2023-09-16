@@ -16,7 +16,9 @@ interface GenericParams {
 
 interface AboutProps {
   slug: string;
-  data: any; // YourDataType คือชนิดของข้อมูลที่คุณกำลังใช้
+  data: {
+    message: string;
+  };
 }
 
 const About: React.FC<AboutProps> = ({ slug, data }) => {
@@ -72,7 +74,6 @@ export const getStaticProps: GetStaticProps<Slug, GenericParams> = async ({
     throw new Error("Params are undefined"); // Handle this case appropriately
   }
   const data = await fetchDataBySlug(params.slug);
-  console.log(data);
   return {
     props: {
       slug: params.slug,

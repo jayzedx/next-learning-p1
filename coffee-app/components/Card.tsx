@@ -12,7 +12,7 @@ import cls from "classnames";
 //   );
 // };
 
-interface CardProps {
+export interface CardProps {
   href: string;
   name: string;
   imgUrl: string;
