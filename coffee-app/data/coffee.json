@@ -1,22 +1,22 @@
 [
   {
     "id": 0,
-    "name": "Latte",
+    "name": "example",
     "imgUrl": "/images/product.jpeg"
   },
   {
     "id": 1,
-    "name": "Black Roast",
+    "name": "example",
     "imgUrl": "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/flat-white-3402c4f.jpg"
   },
   {
     "id": 3,
-    "name": "Nest cofee",
+    "name": "example",
     "imgUrl": "/images/product.jpeg"
   },
   {
     "id": 4,
-    "name": "Americano",
+    "name": "example",
     "imgUrl": "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/flat-white-3402c4f.jpg"
   }
 ]

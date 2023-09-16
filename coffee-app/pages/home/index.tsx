@@ -45,6 +45,16 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   );
 };
 
+// static server side rendering
+// export async function getStaticProps() {
+//   const data = coffeeStores;
+//   return {
+//     props: {
+//       data,
+//     },
+//   };
+// }
+
 export async function getServerSideProps() {
   const apiUrl = "https://coffeerota.free.beeceptor.com/coffee";
   try {
