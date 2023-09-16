@@ -8,11 +8,18 @@ const Home = () => {
     name: string;
     imgUrl: string;
   }
-  const coffeeItems: JSX.Element[] = coffeeStores.map((item: CoffeeItem) => {
-    return (
-      <Card href={`/coffee/${item.id}`} name={item.name} imgUrl={item.imgUrl} />
-    );
-  });
+  const coffeeItems: JSX.Element[] = coffeeStores.map(
+    (item: CoffeeItem, index: number) => {
+      return (
+        <Card
+          key={index}
+          href={`/coffee/${item.id}`}
+          name={item.name}
+          imgUrl={item.imgUrl}
+        />
+      );
+    }
+  );
 
   return (
     <div>

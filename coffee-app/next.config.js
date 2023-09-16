@@ -2,7 +2,7 @@
 const nextConfig = {
   swcMinify: true,
   images: {
-    domains: ["assets.example.com"], // for calling image from another host
+    domains: ["images.immediate.co.uk"], // for calling image from another host
   },
 };
 
