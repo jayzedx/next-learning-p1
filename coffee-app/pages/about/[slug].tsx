@@ -14,13 +14,20 @@ interface GenericParams {
   [key: string]: string; // Add an index signature
 }
 
-const About: React.FC<Slug> = ({ slug }) => {
+interface AboutProps {
+  slug: string;
+  data: any; // YourDataType คือชนิดของข้อมูลที่คุณกำลังใช้
+}
+
+const About: React.FC<AboutProps> = ({ slug, data }) => {
   return (
     <div>
       <h1>{slug}</h1>
+      <h3>{data.message}</h3>
     </div>
   );
 };
+export default About;
 
 const fetchSlugs = async () => {
   try {
@@ -31,7 +38,8 @@ const fetchSlugs = async () => {
   }
 };
 
-export const fetchDataBySlug = async (slug: string): Promise<Slug> => {
+const fetchDataBySlug = async (slug: string): Promise<any> => {
+  /*
   try {
     const response = await axios.get(`/api/${slug}`);
     if (response.status !== 200) {
@@ -43,6 +51,9 @@ export const fetchDataBySlug = async (slug: string): Promise<Slug> => {
     console.error("Error fetching data by slug:", error);
     throw error;
   }
+  */
+
+  return { message: "this is data from query with " + slug };
 };
 
 export const getStaticPaths: GetStaticPaths<GenericParams> = async () => {
@@ -60,7 +71,8 @@ export const getStaticProps: GetStaticProps<Slug, GenericParams> = async ({
   if (!params) {
     throw new Error("Params are undefined"); // Handle this case appropriately
   }
-  const data: Slug = await fetchDataBySlug(params.slug);
+  const data = await fetchDataBySlug(params.slug);
+  console.log(data);
   return {
     props: {
       slug: params.slug,
