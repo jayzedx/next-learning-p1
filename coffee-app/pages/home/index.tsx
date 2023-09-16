@@ -2,13 +2,18 @@ import Card from "@/components/Card";
 import styles from "@/styles/card.module.css";
 import coffeeStores from "@/data/coffee.json";
 
-const Home = () => {
-  interface CoffeeItem {
-    id: number;
-    name: string;
-    imgUrl: string;
-  }
-  const coffeeItems: JSX.Element[] = coffeeStores.map(
+interface CoffeeItem {
+  id: number;
+  name: string;
+  imgUrl: string;
+}
+
+interface HomeProps {
+  data: CoffeeItem[];
+}
+
+const Home: React.FC<HomeProps> = ({ data }) => {
+  const coffeeItems: JSX.Element[] = data.map(
     (item: CoffeeItem, index: number) => {
       return (
         <Card
@@ -39,5 +44,29 @@ const Home = () => {
     </div>
   );
 };
-// http://localhost:3000/home
+
+export async function getServerSideProps() {
+  const apiUrl = "https://coffeerota.free.beeceptor.com/coffee";
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error("Failed to fetch data from the API");
+    }
+    const data: CoffeeItem[] = await response.json();
+    return {
+      props: {
+        data,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return {
+      props: {
+        data: [],
+      },
+    };
+  }
+}
+
 export default Home;
+// http://localhost:3000/home
