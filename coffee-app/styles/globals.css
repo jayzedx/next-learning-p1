@@ -13,3 +13,8 @@ a {
   font-size: 10px;
   background-color: rgb(255, 255, 255);
 }
+
+/* test for classnames package */
+.glass {
+  border: 3px solid white;
+}
