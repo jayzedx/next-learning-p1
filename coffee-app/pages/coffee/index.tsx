@@ -81,7 +81,7 @@ export async function getServerSideProps() {
     console.error("Error fetching data:", error);
     return {
       props: {
-        items: [],
+        items: coffeeData,
         error: true,
       },
     };
